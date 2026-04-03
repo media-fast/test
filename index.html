@@ -1,1 +1,376 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>All In Cars - Vente de voitures</title><link rel="stylesheet" href="styles.css" /><script src="script.js" defer></script><style>body{margin:0;font-family:Arial,sans-serif;color:#333;background:#f7f7f7;}header{background:#1a237e;color:#fff;padding:30px 20px;text-align:center;box-shadow:0 4px 6px rgba(0,0,0,0.1);}header h1{margin:0;font-weight:700;letter-spacing:2px;}nav{margin-top:10px;}nav a{color:#bbdefb;text-decoration:none;margin:0 15px;font-weight:600;transition:color 0.3s ease;}nav a:hover{color:#ffc107;}section{max-width:1000px;margin:40px auto;padding:0 20px;}#about, #inventory, #contact{background:#fff;padding:30px 30px 40px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:40px;}#about h2, #inventory h2, #contact h2{color:#1a237e;border-bottom:3px solid #ffc107;padding-bottom:8px;margin-bottom:25px;}#about p{font-size:1.1em;line-height:1.6;}#inventory .car-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}#inventory .car-card{background:#f1f1f1;border-radius:6px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:transform 0.2s ease;}#inventory .car-card:hover{transform:scale(1.03);}#inventory img{width:100%;height:180px;object-fit:cover;}#inventory .car-info{padding:15px;}#inventory .car-info h3{margin:0 0 10px;color:#333;}#inventory .car-info p{margin:0 0 6px;color:#555;font-size:0.9em;}form{display:flex;flex-direction:column;max-width:500px;margin:auto;}form label{margin-bottom:6px;font-weight:600;color:#1a237e;}form input, form textarea{padding:10px;border:1px solid #ccc;border-radius:4px;margin-bottom:14px;font-size:1em;resize:none;}form button{background:#1a237e;color:#fff;padding:12px;font-size:1.1em;border:none;border-radius:4px;cursor:pointer;transition:background-color 0.3s ease;}form button:hover{background:#ffc107;color:#1a237e;}footer{background:#1a237e;color:#fff;text-align:center;padding:15px 10px;font-size:0.9em;}@media (max-width:600px){nav a{margin:0 10px;display:inline-block;margin-bottom:8px;}} </style></head><body><header><h1>All In Cars</h1><nav><a href="#about">À propos</a><a href="#inventory">Nos voitures</a><a href="#contact">Contact</a></nav></header><main><section id="about"><h2>À propos de nous</h2><p>Bienvenue chez <strong>All In Cars</strong>, votre partenaire privilégié dans la vente de voitures neuves et d'occasion. Nous vous proposons un large choix de véhicules adaptés à tous les budgets et besoins, avec un service client exceptionnel pour vous accompagner dans votre achat.</p></section><section id="inventory"><h2>Notre inventaire</h2><div class="car-list" id="car-list"></div></section><section id="contact"><h2>Contactez-nous</h2><form id="contact-form"><label for="name">Nom complet</label><input type="text" id="name" name="name" required /><label for="email">Email</label><input type="email" id="email" name="email" required /><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea><button type="submit">Envoyer</button></form></section></main><footer><p>&copy; 2024 All In Cars. Tous droits réservés.</p></footer><script>const cars = [ { id: 1, marque: "Toyota", modele: "Corolla", annee: 2022, prix: "18 000 €", image: "https://cdn.pixabay.com/photo/2017/01/06/19/15/toyota-1952319_1280.jpg" }, { id: 2, marque: "Renault", modele: "Clio", annee: 2021, prix: "13 500 €", image: "https://cdn.pixabay.com/photo/2018/05/10/22/03/renault-3390514_1280.jpg" }, { id: 3, marque: "Peugeot", modele: "208", annee: 2020, prix: "12 800 €", image: "https://cdn.pixabay.com/photo/2017/07/28/09/47/peugeot-2545644_1280.jpg" }, { id: 4, marque: "Volkswagen", modele: "Golf", annee: 2019, prix: "15 900 €", image: "https://cdn.pixabay.com/photo/2015/02/05/20/20/volkswagen-625401_1280.jpg" }];function displayCars(){const container = document.getElementById('car-list');cars.forEach(car =>{const card = document.createElement('div');card.className = 'car-card';card.innerHTML = `<img src="${car.image}" alt="${car.marque} ${car.modele}" /><div class="car-info"><h3>${car.marque} ${car.modele}</h3><p>Année: ${car.annee}</p><p>Prix: ${car.prix}</p></div>`;container.appendChild(card);});}document.addEventListener('DOMContentLoaded',()=>{displayCars();const form = document.getElementById('contact-form');form.addEventListener('submit',event =>{event.preventDefault();alert("Merci pour votre message, nous vous répondrons rapidement.");form.reset();});});</script></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All In Cars</title>
+    <style>
+        /* Reset & base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Navigation */
+        nav {
+            background-color: #0d6efd;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+        nav ul li a {
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #cce0ff;
+        }
+        /* Hero Section */
+        header.hero {
+            background: url('https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80') center/cover no-repeat;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+        }
+        header.hero .hero-content {
+            max-width: 600px;
+            background-color: rgba(13, 110, 253, 0.7);
+            padding: 2rem 2.5rem;
+            border-radius: 10px;
+        }
+        header.hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        header.hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        header.hero button {
+            background-color: #ffc107;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #333;
+            box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        }
+        header.hero button:hover {
+            background-color: #e0a800;
+        }
+        /* Sections common */
+        section {
+            padding: 5rem 0;
+        }
+        section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+        section p.lead {
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        /* About Section */
+        #apropos .content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #apropos .content img {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 450px;
+            flex: 1 1 400px;
+            object-fit: cover;
+        }
+        #apropos .text {
+            flex: 1 1 350px;
+            color: #444;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        /* Services Section */
+        #services .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        #services .service {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        #services .service:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgb(0 0 0 / 0.15);
+        }
+        #services .service i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+        #services .service h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            color: #222;
+        }
+        #services .service p {
+            color: #555;
+            font-size: 1rem;
+        }
+        /* Contact Section */
+        #contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgb(0 0 0 / 0.1);
+        }
+        #contact form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        #contact form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #222;
+        }
+        #contact form input,
+        #contact form textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+        #contact form input:focus,
+        #contact form textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+        }
+        #contact form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        #contact form button {
+            background-color: #0d6efd;
+            border: none;
+            padding: 0.9rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        }
+        #contact form button:hover {
+            background-color: #084cd6;
+        }
+        /* Footer */
+        footer {
+            background-color: #0d6efd;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            header.hero h1 {
+                font-size: 2rem;
+            }
+            header.hero .hero-content {
+                max-width: 90%;
+                padding: 1.5rem 2rem;
+            }
+            #apropos .content {
+                flex-direction: column;
+            }
+            nav ul {
+                gap: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">All In Cars</div>
+            <ul>
+                <li><a href="#hero">Accueil</a></li>
+                <li><a href="#apropos">À Propos</a></li>
+                <li><a href="#services">Nos Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="hero" class="hero">
+        <div class="container hero-content">
+            <h1>All In Cars</h1>
+            <p>Votre partenaire de confiance pour la vente de voitures de qualité et d'occasion.</p>
+            <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });">Contactez-nous</button>
+        </div>
+    </header>
+
+    <section id="apropos">
+        <h2>À Propos</h2>
+        <p class="lead">All In Cars est une entreprise spécialisée dans la vente de voitures neuves et d'occasion, offrant une large gamme de véhicules adaptés à tous les besoins et budgets.</p>
+        <div class="content container">
+            <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" alt="Vente de voitures All In Cars">
+            <div class="text">
+                <p>Depuis plus de 15 ans, nous nous engageons à fournir des véhicules de haute qualité, un service client exceptionnel et des conseils personnalisés pour vous accompagner dans votre choix automobile. Notre équipe passionnée est là pour vous aider à trouver la voiture qui correspond parfaitement à vos attentes.</p>
+                <p>Avec All In Cars, achetez votre voiture en toute confiance. Découvrez nos offres exclusives et profitez d'un service après-vente réactif et professionnel.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2>Nos Services</h2>
+        <p class="lead">Découvrez nos services pensés pour vous offrir une expérience transparente et sans stress.</p>
+        <div class="services-grid container">
+            <div class="service">
+                <i aria-hidden="true">🚗</i>
+                <h3>Vente de voitures neuves</h3>
+                <p>Large gamme de véhicules neufs des principales marques, avec garantie constructeur et options personnalisables.</p>
+            </div>
+            <div class="service">
+                <i aria-hidden="true">🔧</i>
+                <h3>Véhicules d'occasion certifiés</h3>
+                <p>Des voitures d'occasion inspectées et certifiées pour un achat serein et sécurisé.</p>
+            </div>
+            <div class="service">
+                <i aria-hidden="true">💼</i>
+                <h3>Financement personnalisé</h3>
+                <p>Solutions de financement adaptées à votre budget avec des taux compétitifs et des conditions claires.</p>
+            </div>
+            <div class="service">
+                <i aria-hidden="true">📅</i>
+                <h3>Essai et livraison</h3>
+                <p>Programme d’essai personnalisé et livraison rapide directement à votre domicile ou en concession.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Nom complet</label>
+                <input type="text" id="name" name="name" placeholder="Votre nom" required aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Votre email" required aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Votre message" required aria-required="true"></textarea>
+            </div>
+            <button type="submit">Envoyer</button>
+            <p id="formResponse" style="text-align:center; margin-top:1rem; color: #0d6efd; font-weight:600; display:none;"></p>
+        </form>
+    </section>
+
+    <footer>
+        &copy; 2024 All In Cars. Tous droits réservés.
+    </footer>
+
+    <script>
+        // Smooth scroll for nav links
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                const targetId = anchor.getAttribute('href').slice(1);
+                const target = document.getElementById(targetId);
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Simple form submission simulation
+        const form = document.getElementById('contactForm');
+        const responseMsg = document.getElementById('formResponse');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            // Basic form validation
+            if(form.name.value.trim() === '' || form.email.value.trim() === '' || form.message.value.trim() === '') {
+                responseMsg.textContent = 'Veuillez remplir tous les champs.';
+                responseMsg.style.color = 'red';
+                responseMsg.style.display = 'block';
+                return;
+            }
+            // Simulate sending
+            responseMsg.style.color = '#0d6efd';
+            responseMsg.textContent = 'Merci pour votre message. Nous vous contacterons bientôt !';
+            responseMsg.style.display = 'block';
+            form.reset();
+        });
+    </script>
+</body>
+</html>
