@@ -1,42 +1,29 @@
-// Script pour gérer le formulaire de contact
-
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('contactForm');
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
     const formMessage = document.getElementById('formMessage');
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
+    // Simple validation
+    const name = this.name.value.trim();
+    const email = this.email.value.trim();
+    const message = this.message.value.trim();
 
-        // Récupération des valeurs
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const message = form.message.value.trim();
-
-        // Validation simple
-        if (!name || !email || !message) {
-            formMessage.style.color = "red";
-            formMessage.textContent = "Veuillez remplir tous les champs.";
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            formMessage.style.color = "red";
-            formMessage.textContent = "Veuillez entrer une adresse email valide.";
-            return;
-        }
-
-        // Simuler un envoi de formulaire
-        formMessage.style.color = "green";
-        formMessage.textContent = "Envoi en cours...";
-
-        setTimeout(() => {
-            formMessage.textContent = "Merci de nous avoir contactés, nous vous répondrons bientôt !";
-            form.reset();
-        }, 1500);
-    });
-
-    function validateEmail(email) {
-        const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})$/i;
-        return re.test(email.toLowerCase());
+    if(!name || !email || !message) {
+        formMessage.textContent = 'Veuillez remplir tous les champs.';
+        formMessage.className = 'form-message error';
+        return;
     }
+
+    // Email simple regex validation
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if(!emailRegex.test(email)) {
+        formMessage.textContent = 'L\'adresse email est invalide.';
+        formMessage.className = 'form-message error';
+        return;
+    }
+
+    // Simulate form submission success
+    formMessage.textContent = 'Merci pour votre message, nous vous répondrons rapidement.';
+    formMessage.className = 'form-message success';
+
+    this.reset();
 });
