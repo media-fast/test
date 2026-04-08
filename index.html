@@ -1,376 +1,96 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All In Cars</title>
-    <style>
-        /* Reset & base */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f7f9fc;
-            color: #333;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        img {
-            max-width: 100%;
-            display: block;
-        }
-        /* Container */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        /* Navigation */
-        nav {
-            background-color: #0d6efd;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
-        }
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        nav .logo {
-            color: white;
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2.5rem;
-        }
-        nav ul li a {
-            color: white;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        nav ul li a:hover {
-            color: #cce0ff;
-        }
-        /* Hero Section */
-        header.hero {
-            background: url('https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80') center/cover no-repeat;
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            color: white;
-            text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
-        }
-        header.hero .hero-content {
-            max-width: 600px;
-            background-color: rgba(13, 110, 253, 0.7);
-            padding: 2rem 2.5rem;
-            border-radius: 10px;
-        }
-        header.hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        header.hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-        header.hero button {
-            background-color: #ffc107;
-            border: none;
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            color: #333;
-            box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-        }
-        header.hero button:hover {
-            background-color: #e0a800;
-        }
-        /* Sections common */
-        section {
-            padding: 5rem 0;
-        }
-        section h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #0d6efd;
-        }
-        section p.lead {
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
-            text-align: center;
-            font-size: 1.1rem;
-            color: #555;
-        }
-        /* About Section */
-        #apropos .content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        #apropos .content img {
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            max-width: 450px;
-            flex: 1 1 400px;
-            object-fit: cover;
-        }
-        #apropos .text {
-            flex: 1 1 350px;
-            color: #444;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-        /* Services Section */
-        #services .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-            gap: 2.5rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        #services .service {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgb(0 0 0 / 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-        #services .service:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgb(0 0 0 / 0.15);
-        }
-        #services .service i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #0d6efd;
-        }
-        #services .service h3 {
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            color: #222;
-        }
-        #services .service p {
-            color: #555;
-            font-size: 1rem;
-        }
-        /* Contact Section */
-        #contact form {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 2.5rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgb(0 0 0 / 0.1);
-        }
-        #contact form .form-group {
-            margin-bottom: 1.5rem;
-        }
-        #contact form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #222;
-        }
-        #contact form input,
-        #contact form textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-            font-family: inherit;
-        }
-        #contact form input:focus,
-        #contact form textarea:focus {
-            outline: none;
-            border-color: #0d6efd;
-        }
-        #contact form textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        #contact form button {
-            background-color: #0d6efd;
-            border: none;
-            padding: 0.9rem 2rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: block;
-            margin: 0 auto;
-            box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-        }
-        #contact form button:hover {
-            background-color: #084cd6;
-        }
-        /* Footer */
-        footer {
-            background-color: #0d6efd;
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            font-size: 0.9rem;
-            margin-top: 3rem;
-        }
-        /* Responsive */
-        @media (max-width: 768px) {
-            header.hero h1 {
-                font-size: 2rem;
-            }
-            header.hero .hero-content {
-                max-width: 90%;
-                padding: 1.5rem 2rem;
-            }
-            #apropos .content {
-                flex-direction: column;
-            }
-            nav ul {
-                gap: 1.2rem;
-            }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All In Cars - Vente de Voitures</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <nav>
-        <div class="container">
+    <header id="hero">
+        <nav class="navbar">
             <div class="logo">All In Cars</div>
-            <ul>
+            <ul class="nav-links">
                 <li><a href="#hero">Accueil</a></li>
-                <li><a href="#apropos">À Propos</a></li>
+                <li><a href="#about">À Propos</a></li>
                 <li><a href="#services">Nos Services</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </div>
-    </nav>
-
-    <header id="hero" class="hero">
-        <div class="container hero-content">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <div class="hero-content">
             <h1>All In Cars</h1>
-            <p>Votre partenaire de confiance pour la vente de voitures de qualité et d'occasion.</p>
-            <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });">Contactez-nous</button>
+            <p>Votre partenaire de confiance pour la vente de voitures</p>
+            <a href="#contact" class="btn-primary">Contactez-nous</a>
         </div>
     </header>
 
-    <section id="apropos">
-        <h2>À Propos</h2>
-        <p class="lead">All In Cars est une entreprise spécialisée dans la vente de voitures neuves et d'occasion, offrant une large gamme de véhicules adaptés à tous les besoins et budgets.</p>
-        <div class="content container">
-            <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60" alt="Vente de voitures All In Cars">
-            <div class="text">
-                <p>Depuis plus de 15 ans, nous nous engageons à fournir des véhicules de haute qualité, un service client exceptionnel et des conseils personnalisés pour vous accompagner dans votre choix automobile. Notre équipe passionnée est là pour vous aider à trouver la voiture qui correspond parfaitement à vos attentes.</p>
-                <p>Avec All In Cars, achetez votre voiture en toute confiance. Découvrez nos offres exclusives et profitez d'un service après-vente réactif et professionnel.</p>
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2>À Propos</h2>
+            <p>All In Cars est une entreprise spécialisée dans la vente de voitures neuves et d'occasion. Notre équipe passionnée met tout en œuvre pour vous fournir un service personnalisé et des véhicules de qualité adaptés à vos besoins. Nous valorisons la transparence, la confiance et la satisfaction client.</p>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding bg-light">
+        <div class="container">
+            <h2>Nos Services</h2>
+            <div class="services-grid">
+                <article class="service-item">
+                    <h3>Achat de voitures neuves</h3>
+                    <p>Découvrez notre large gamme de voitures neuves de différentes marques, avec des conseils d’experts pour trouver la voiture idéale.</p>
+                </article>
+                <article class="service-item">
+                    <h3>Vente de voitures d’occasion</h3>
+                    <p>Nous proposons une sélection rigoureuse de véhicules d'occasion contrôlés et garantis pour vous assurer une tranquillité d'esprit.</p>
+                </article>
+                <article class="service-item">
+                    <h3>Financement sur mesure</h3>
+                    <p>Profitez de solutions de financement adaptées à votre budget afin de faciliter votre achat sans soucis.</p>
+                </article>
+                <article class="service-item">
+                    <h3>Service après-vente</h3>
+                    <p>Notre équipe assure un suivi et un service après-vente de qualité pour que votre expérience soit parfaite.</p>
+                </article>
             </div>
         </div>
     </section>
 
-    <section id="services">
-        <h2>Nos Services</h2>
-        <p class="lead">Découvrez nos services pensés pour vous offrir une expérience transparente et sans stress.</p>
-        <div class="services-grid container">
-            <div class="service">
-                <i aria-hidden="true">🚗</i>
-                <h3>Vente de voitures neuves</h3>
-                <p>Large gamme de véhicules neufs des principales marques, avec garantie constructeur et options personnalisables.</p>
-            </div>
-            <div class="service">
-                <i aria-hidden="true">🔧</i>
-                <h3>Véhicules d'occasion certifiés</h3>
-                <p>Des voitures d'occasion inspectées et certifiées pour un achat serein et sécurisé.</p>
-            </div>
-            <div class="service">
-                <i aria-hidden="true">💼</i>
-                <h3>Financement personnalisé</h3>
-                <p>Solutions de financement adaptées à votre budget avec des taux compétitifs et des conditions claires.</p>
-            </div>
-            <div class="service">
-                <i aria-hidden="true">📅</i>
-                <h3>Essai et livraison</h3>
-                <p>Programme d’essai personnalisé et livraison rapide directement à votre domicile ou en concession.</p>
-            </div>
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2>Contactez-nous</h2>
+            <form id="contact-form" novalidate>
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" name="name" required placeholder="Votre nom" />
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Votre adresse email" />
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Votre message"></textarea>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="btn-primary">Envoyer</button>
+                <p id="form-status"></p>
+            </form>
         </div>
-    </section>
-
-    <section id="contact">
-        <h2>Contact</h2>
-        <form id="contactForm">
-            <div class="form-group">
-                <label for="name">Nom complet</label>
-                <input type="text" id="name" name="name" placeholder="Votre nom" required aria-required="true" />
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Votre email" required aria-required="true" />
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Votre message" required aria-required="true"></textarea>
-            </div>
-            <button type="submit">Envoyer</button>
-            <p id="formResponse" style="text-align:center; margin-top:1rem; color: #0d6efd; font-weight:600; display:none;"></p>
-        </form>
     </section>
 
     <footer>
-        &copy; 2024 All In Cars. Tous droits réservés.
+        <div class="container">
+            <p>&copy; 2024 All In Cars. Tous droits réservés.</p>
+        </div>
     </footer>
 
-    <script>
-        // Smooth scroll for nav links
-        document.querySelectorAll('nav ul li a').forEach(anchor => {
-            anchor.addEventListener('click', e => {
-                e.preventDefault();
-                const targetId = anchor.getAttribute('href').slice(1);
-                const target = document.getElementById(targetId);
-                if(target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Simple form submission simulation
-        const form = document.getElementById('contactForm');
-        const responseMsg = document.getElementById('formResponse');
-
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            // Basic form validation
-            if(form.name.value.trim() === '' || form.email.value.trim() === '' || form.message.value.trim() === '') {
-                responseMsg.textContent = 'Veuillez remplir tous les champs.';
-                responseMsg.style.color = 'red';
-                responseMsg.style.display = 'block';
-                return;
-            }
-            // Simulate sending
-            responseMsg.style.color = '#0d6efd';
-            responseMsg.textContent = 'Merci pour votre message. Nous vous contacterons bientôt !';
-            responseMsg.style.display = 'block';
-            form.reset();
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
