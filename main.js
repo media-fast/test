@@ -1,72 +1,56 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+// Menu toggle for mobile
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('.nav-menu');
 
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
 
-    const form = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        clearErrors();
-        formStatus.textContent = '';
-
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const message = form.message.value.trim();
-
-        let valid = true;
-
-        if(name === '') {
-            showError('name', 'Veuillez saisir votre nom.');
-            valid = false;
-        }
-
-        if(email === '') {
-            showError('email', 'Veuillez saisir votre email.');
-            valid = false;
-        } else if(!validateEmail(email)) {
-            showError('email', 'Veuillez saisir un email valide.');
-            valid = false;
-        }
-
-        if(message === '') {
-            showError('message', 'Veuillez saisir un message.');
-            valid = false;
-        }
-
-        if(valid) {
-            formStatus.style.color = '#007700';
-            formStatus.textContent = 'Merci pour votre message. Nous vous contacterons bientôt!';
-            form.reset();
-        }
-    });
-
-    function showError(fieldId, message) {
-        const field = document.getElementById(fieldId);
-        const errorSpan = field.nextElementSibling;
-        errorSpan.textContent = message;
-        errorSpan.style.display = 'block';
-        field.style.borderColor = '#e74c3c';
+// Close mobile menu on link click
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    if(navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      navToggle.classList.remove('active');
     }
+  });
+});
 
-    function clearErrors() {
-        const errorSpans = document.querySelectorAll('.error-message');
-        errorSpans.forEach(span => {
-            span.textContent = '';
-            span.style.display = 'none';
-        });
-        ['name', 'email', 'message'].forEach(id => {
-            document.getElementById(id).style.borderColor = '#ccc';
-        });
-    }
+// Form validation & submission simulation
+const contactForm = document.getElementById('contact-form');
+const formResponse = document.querySelector('.form-response');
 
-    function validateEmail(email) {
-        // Simple email regex
-        const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})$/i;
-        return re.test(email.toLowerCase());
-    }
+contactForm.addEventListener('submit', e => {
+  e.preventDefault();
+  formResponse.textContent = '';
+
+  const name = contactForm.name.value.trim();
+  const email = contactForm.email.value.trim();
+  const message = contactForm.message.value.trim();
+
+  if (!name || !email || !message) {
+    formResponse.textContent = 'Veuillez remplir tous les champs.';
+    formResponse.style.color = '#e74c3c';
+    return;
+  }
+
+  // Simple email regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    formResponse.textContent = 'Veuillez saisir une adresse email valide.';
+    formResponse.style.color = '#e74c3c';
+    return;
+  }
+
+  // Simulate sending...
+  formResponse.textContent = 'Envoi en cours...';
+  formResponse.style.color = '#f39c12';
+
+  setTimeout(() => {
+    formResponse.textContent = 'Merci pour votre message, nous vous répondrons rapidement.';
+    formResponse.style.color = '#27ae60';
+    contactForm.reset();
+  }, 1500);
 });
