@@ -1,1 +1,51 @@
-const navToggle = document.querySelector('.nav-toggle'); const navLinks = document.querySelector('.nav-links'); const form = document.getElementById('contactForm'); const formMessage = document.getElementById('formMessage'); navToggle.addEventListener('click', ()=>{ navLinks.classList.toggle('active'); }); form.addEventListener('submit', e=>{ e.preventDefault(); formMessage.textContent = ''; const name = form.name.value.trim(); const email = form.email.value.trim(); const message = form.message.value.trim(); if(name.length < 2){ formMessage.textContent = 'Veuillez saisir un nom valide.'; formMessage.style.color = 'red'; return;} if(!validateEmail(email)){ formMessage.textContent = 'Veuillez saisir un email valide.'; formMessage.style.color = 'red'; return;} if(message.length < 10){ formMessage.textContent = 'Votre message doit contenir au moins 10 caractères.'; formMessage.style.color = 'red'; return;} formMessage.textContent = 'Votre message a été envoyé avec succès !'; formMessage.style.color = '#2a9d8f'; form.reset(); }); function validateEmail(email){ return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email); }
+document.addEventListener('DOMContentLoaded', function() {
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  const navList = nav.querySelector('.nav-list');
+  
+  burger.addEventListener('click', () => {
+    navList.classList.toggle('show');
+    burger.classList.toggle('active');
+  });
+
+  // Close menu when clicking a nav link (mobile)
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if(navList.classList.contains('show')) {
+        navList.classList.remove('show');
+        burger.classList.remove('active');
+      }
+    });
+  });
+
+  // Contact form submission
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Merci pour votre message, nous vous répondrons rapidement !');
+    contactForm.reset();
+  });
+
+  // Scroll active nav link update
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    let scrollY = window.pageYOffset;
+
+    sections.forEach(current => {
+      const sectionHeight = current.offsetHeight;
+      const sectionTop = current.offsetTop - 70;
+      const sectionId = current.getAttribute('id');
+
+      if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if(link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+});
